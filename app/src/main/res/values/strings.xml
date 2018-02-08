@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Hotel</string>
+    <string name="fb_login">Login with Facebook</string>
+    <string name="twitter_login">Login with Twitter</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="signup">or signup here</string>
+    <string name="image_des">Logo</string>
+</resources>
