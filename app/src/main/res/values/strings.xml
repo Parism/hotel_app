@@ -5,6 +5,8 @@
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
-    <string name="signup">or signup here</string>
+    <string name="signup"><u>or signup here</u></string>
     <string name="image_des">Logo</string>
+    <string name="username_hint">Username</string>
+    <string name="signup_button">Sign Up</string>
 </resources>
