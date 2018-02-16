@@ -6,12 +6,112 @@
     android:layout_height="match_parent"
     tools:context="com.example.hotel.HomeActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayoutRooms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutCheckIn"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayoutFacilities"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="73dp"
-        android:layout_height="80dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="57dp" />
+        <ImageView
+            android:id="@+id/roomsButtonImage"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:srcCompat="@drawable/ic_rooms" />
+
+        <TextView
+            android:id="@+id/roomsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/roomsTextview"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayoutReview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRooms">
+
+        <ImageView
+            android:id="@+id/checkInButtonImage"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:srcCompat="@drawable/ic_checkin"
+            tools:layout_editor_absoluteX="53dp"
+            tools:layout_editor_absoluteY="280dp" />
+
+        <TextView
+            android:id="@+id/checkInTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/checkInTextview"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutFacilities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutReview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutRooms"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/facilitiesButtonImage"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:srcCompat="@drawable/ic_facilities"
+            tools:layout_editor_absoluteX="220dp"
+            tools:layout_editor_absoluteY="78dp" />
+
+        <TextView
+            android:id="@+id/facilitiesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/facilitiesTextview"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutCheckIn"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutFacilities"
+        app:layout_constraintVertical_bias="0.57">
+
+        <ImageView
+            android:id="@+id/reviewButtonImage"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:srcCompat="@drawable/ic_questionnaire"
+            tools:layout_editor_absoluteX="220dp"
+            tools:layout_editor_absoluteY="280dp" />
+
+        <TextView
+            android:id="@+id/reviewTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reviewTextview"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

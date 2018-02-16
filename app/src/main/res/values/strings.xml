@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Antony Studios</string>
+    <string name="app_name">Antony Suites</string>
+
+    <!--Main activity-->
     <string name="fb_login">Login with Facebook</string>
     <string name="twitter_login">Login with Twitter</string>
     <string name="email_hint">Email</string>
@@ -9,4 +11,10 @@
     <string name="image_des">Logo</string>
     <string name="username_hint">Username</string>
     <string name="signup_button">Sign Up</string>
+
+    <!--Home activity-->
+    <string name="roomsTextview">Rooms</string>
+    <string name="checkInTextview">Check In</string>
+    <string name="facilitiesTextview">Facilities</string>
+    <string name="reviewTextview">Review</string>
 </resources>
