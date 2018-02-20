@@ -18,6 +18,11 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.homeToolbar); //toolbar creation
         setSupportActionBar(toolbar);
+
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false); //hide app title from toolbar
+        }
+
         toolbar.setNavigationIcon(R.drawable.ic_menu);//menu icon creation
     }
 
