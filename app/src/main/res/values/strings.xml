@@ -17,4 +17,11 @@
     <string name="checkInTextview">Check In</string>
     <string name="facilitiesTextview">Facilities</string>
     <string name="reviewTextview">Review</string>
+    <string name="roomsIcon">Rooms Icon</string>
+    <string name="checkInIcon">Check In Icon</string>
+    <string name="facilitiesIcon">Facilities Icon</string>
+    <string name="reviewIcon">Review Icon</string>
+    <string name="chatMenuButton">Chat</string>
+    <string name="logo_des">Hotel Logo</string>
+
 </resources>
