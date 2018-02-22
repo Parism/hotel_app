@@ -11,6 +11,9 @@
     <string name="image_des">Logo</string>
     <string name="username_hint">Username</string>
     <string name="signup_button">Sign Up</string>
+    <string name="facebook_app_id">2028741830682503</string>
+    <string name="fb_login_protocol_scheme">fb2028741830682503</string>
+
 
     <!--Home activity-->
     <string name="roomsTextview">Rooms</string>
