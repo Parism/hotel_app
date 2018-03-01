@@ -16,6 +16,8 @@
 
 
     <!--Home activity-->
+
+    <!--Home fragment-->
     <string name="roomsTextview">Rooms</string>
     <string name="checkInTextview">Check In</string>
     <string name="facilitiesTextview">Facilities</string>
@@ -26,5 +28,7 @@
     <string name="reviewIcon">Review Icon</string>
     <string name="chatMenuButton">Chat</string>
     <string name="logo_des">Hotel Logo</string>
+    <string name="menu_icon">Menu Icon</string>
+    <string name="chat_icon">Chat Icon</string>
 
 </resources>

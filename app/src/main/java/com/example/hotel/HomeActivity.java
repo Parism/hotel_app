@@ -1,12 +1,8 @@
 package com.example.hotel;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -16,35 +12,16 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = findViewById(R.id.homeToolbar); //toolbar creation
-        setSupportActionBar(toolbar);
 
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setDisplayShowTitleEnabled(false); //hide app title from toolbar
-        }
+        // Find the view pager that will allow the user to swipe between fragments
+        ViewPager viewPager = findViewById(R.id.viewpager);
 
-        toolbar.setNavigationIcon(R.drawable.ic_menu);//menu icon creation
+        // Create an adapter that knows which fragment should be shown on each page
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+
+        // Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.chat_menu, menu);//menu buttons creation
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // if chat was selected
-            case R.id.action_chat:
-                Toast.makeText(this, "Chat selected", Toast.LENGTH_SHORT).show();
-                break;
-            default: //if menu was selected
-                Toast.makeText(getApplicationContext(),"Menu selected",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return true;
-    }
 }

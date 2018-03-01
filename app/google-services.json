@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "683866622660",
+    "firebase_url": "https://antony-suites.firebaseio.com",
+    "project_id": "antony-suites",
+    "storage_bucket": "antony-suites.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683866622660:android:fcfc891301220961",
+        "android_client_info": {
+          "package_name": "com.example.hotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683866622660-mqgr412f4pc6rm3e1eahqnpgm74o5bqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hotel",
+            "certificate_hash": "16a946368a8fc5237b47cc5cf6945b77e3f37c61"
+          }
+        },
+        {
+          "client_id": "683866622660-dk0cacgo72pmkie8sod28l5f65jpikkj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hotel",
+            "certificate_hash": "04215d2d4662c410dfbc53a7915130f7199936b8"
+          }
+        },
+        {
+          "client_id": "683866622660-nujha02prfj600un3dbvnjgml7r5drlf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ3xtHC8OpySBrWkCQP56Uw9eld_eI9Ys"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683866622660-nujha02prfj600un3dbvnjgml7r5drlf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
