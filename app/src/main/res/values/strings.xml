@@ -31,4 +31,13 @@
     <string name="menu_icon">Menu Icon</string>
     <string name="chat_icon">Chat Icon</string>
 
+    <!--Navigation Drawer-->
+    <string name="accountTitle">Account</string>
+    <string name="deleteAccountOption">Delete Account</string>
+    <string name="linkAccountOption">Link Account</string>
+    <string name="logoutAccountOption">Logout Account</string>
+    <string name="socialMediaTitle">Social Media</string>
+    <string name="likeFacebookOption">Like us on Facebook</string>
+    <string name="followInstagramOption">Follow us on Instagram</string>
+
 </resources>

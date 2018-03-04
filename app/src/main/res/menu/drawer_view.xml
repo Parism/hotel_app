@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/accountTitle">
+        <menu>
+            <item
+                android:id="@+id/nav_delete_account"
+                android:icon="@drawable/ic_chat"
+                android:title="@string/deleteAccountOption" />
+            <item
+                android:id="@+id/nav_link_account"
+                android:icon="@drawable/ic_chat"
+                android:title="@string/linkAccountOption" />
+            <item
+                android:id="@+id/nav_logout_account"
+                android:icon="@drawable/ic_chat"
+                android:title="@string/logoutAccountOption" />
+        </menu>
+    </item>
+
+    <item android:title="@string/socialMediaTitle">
+        <menu>
+            <item
+                android:id="@+id/nav_like_facebook"
+                android:icon="@drawable/ic_chat"
+                android:title="@string/likeFacebookOption" />
+            <item
+                android:id="@+id/nav_follow_instagram"
+                android:icon="@drawable/ic_chat"
+                android:title="@string/followInstagramOption" />
+        </menu>
+    </item>
+
+</menu>
