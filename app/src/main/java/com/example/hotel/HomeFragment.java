@@ -1,5 +1,11 @@
 package com.example.hotel;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,8 +21,45 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.List;
+
 
 public class HomeFragment extends Fragment {
+
+    private static Intent newFacebookIntent(PackageManager pm, String url) { //creates an intent to the facebook page
+        Uri uri = Uri.parse(url);
+        try {
+            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
+            if (applicationInfo.enabled) {
+                // http://stackoverflow.com/a/24547437/1048340
+                uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return new Intent(Intent.ACTION_VIEW, uri);
+    }
+
+
+
+    private boolean isIntentAvailable(Context ctx, Intent intent) {
+        final PackageManager packageManager = ctx.getPackageManager();
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
+    }
+
+    private void newInstagramIntent(Context activity, String url) {   //creates an intent to the instagram page
+
+        Uri uri = Uri.parse(url);
+        Intent insta = new Intent(Intent.ACTION_VIEW, uri);
+        insta.setPackage("com.instagram.android");
+
+        if (isIntentAvailable(activity, insta)) {
+            startActivity(insta);
+        } else {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        }
+    }
+
 
 
 
@@ -42,8 +85,7 @@ public class HomeFragment extends Fragment {
         menu_icon.setOnClickListener(new View.OnClickListener() {  //menu listener creation
             @Override
             public void onClick(View view) {  //menu listener creation
-                //Toast.makeText(activity, "Menu !!!", Toast.LENGTH_SHORT).show();
-                        mDrawerLayout.openDrawer(GravityCompat.START);//
+                mDrawerLayout.openDrawer(GravityCompat.START);//
             }
         });
 
@@ -66,13 +108,13 @@ public class HomeFragment extends Fragment {
 
                         int id = menuItem.getItemId();
 
-                        if (id == R.id.nav_delete_account) {
-                            // Handle the camera action
-                            Toast.makeText(activity, "yeeeeeeeeeeeeeeeeeeeeeeeeee !!!",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(activity, "yeooooooooooooooooooooooooooo !!!",
-                                    Toast.LENGTH_LONG).show();
+                        if (id == R.id.nav_like_facebook) { //opens an intent to the fb page
+                            Intent fbIntent = newFacebookIntent(activity.getPackageManager(),"https://www.facebook.com/antonysuites/");
+                            startActivity(fbIntent);
+
+                        } else if(id == R.id.nav_follow_instagram){ //opens an intent to the insta page
+                            newInstagramIntent(activity, "http://instagram.com/_u/antony_suites");
+
                         }
 
                         // close drawer when item is tapped
@@ -125,6 +167,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
 
         return homeView;
     }
