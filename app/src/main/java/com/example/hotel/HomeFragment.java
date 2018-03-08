@@ -7,8 +7,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -64,7 +66,7 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View homeView = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -89,10 +91,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
         chat_icon.setOnClickListener(new View.OnClickListener() {  //chat listener creation
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, "Chat !!!", Toast.LENGTH_SHORT).show();
+                ((HomeActivity)getActivity()).setCurrentItem (1, true); //brings you to the chat fragment
             }
         });
 
@@ -102,7 +106,7 @@ public class HomeFragment extends Fragment {
         navigationView.setNavigationItemSelectedListener(                   //Handle the drawer options
                new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         // set item as selected to persist highlight
                         menuItem.setChecked(true);
 
