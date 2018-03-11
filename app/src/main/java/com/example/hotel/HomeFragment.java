@@ -121,6 +121,8 @@ public class HomeFragment extends Fragment {
 
                         }
 
+
+
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
