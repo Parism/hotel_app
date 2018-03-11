@@ -39,5 +39,7 @@
     <string name="socialMediaTitle">Social Media</string>
     <string name="likeFacebookOption">Like us on Facebook</string>
     <string name="followInstagramOption">Follow us on Instagram</string>
+    <string name="email_login_button">Login with Email</string>
+    <string name="logout_button">Logout</string>
 
 </resources>

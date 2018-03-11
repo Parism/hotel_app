@@ -12,23 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/signup_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hotel_icon">
-
-        <EditText
-            android:id="@+id/username_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:ems="10"
-            android:hint="@string/username_hint"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/black"
-            android:textColorLink="@color/colorPrimary"
-            android:textCursorDrawable="@null" />
 
         <EditText
             android:id="@+id/email_input"
@@ -54,17 +41,6 @@
             android:textColorLink="@color/colorPrimary"
             android:textCursorDrawable="@null" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/signup_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <ImageView
         android:id="@+id/hotel_icon"
