@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -86,7 +84,7 @@ public class HomeFragment extends Fragment {
 
         menu_icon.setOnClickListener(new View.OnClickListener() {  //menu listener creation
             @Override
-            public void onClick(View view) {  //menu listener creation
+            public void onClick(View view) {  //menu icon listener creation
                 mDrawerLayout.openDrawer(GravityCompat.START);//
             }
         });
@@ -95,8 +93,8 @@ public class HomeFragment extends Fragment {
 
         chat_icon.setOnClickListener(new View.OnClickListener() {  //chat listener creation
             @Override
-            public void onClick(View view) {
-                ((HomeActivity)getActivity()).setCurrentItem (1, true); //brings you to the chat fragment
+            public void onClick(View view) {  //chat icon listener
+                ((HomeActivity)activity).setCurrentItem (1, true); //brings you to the chat fragment
             }
         });
 
@@ -141,7 +139,6 @@ public class HomeFragment extends Fragment {
                 //Toast.makeText(activity, "top", Toast.LENGTH_SHORT).show();
             }
             public void onSwipeRight() {    //Right swipe opens the drawer
-                //Toast.makeText(activity, "right", Toast.LENGTH_SHORT).show();
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
             public void onSwipeLeft() {

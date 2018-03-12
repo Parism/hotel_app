@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true">
 
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/chatToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Here is the chat fragment"/>
+        android:layout_height="?attr/actionBarSize"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/AppTheme">
+
+
+        <ImageView
+            android:id="@+id/action_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:contentDescription="@string/backArrowIcon"
+            app:srcCompat="@drawable/ic_back_arrow"/>
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/chatFragmentTitle"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+
+    </android.support.v7.widget.Toolbar>
 
 </android.support.constraint.ConstraintLayout>

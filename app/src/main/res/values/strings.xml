@@ -13,7 +13,7 @@
     <string name="signup_button">Sign Up</string>
     <string name="facebook_app_id">2028741830682503</string>
     <string name="fb_login_protocol_scheme">fb2028741830682503</string>
-
+    <string name="email_login_button">Login with Email</string>
 
     <!--Home activity-->
 
@@ -26,7 +26,6 @@
     <string name="checkInIcon">Check In Icon</string>
     <string name="facilitiesIcon">Facilities Icon</string>
     <string name="reviewIcon">Review Icon</string>
-    <string name="chatMenuButton">Chat</string>
     <string name="logo_des">Hotel Logo</string>
     <string name="menu_icon">Menu Icon</string>
     <string name="chat_icon">Chat Icon</string>
@@ -39,7 +38,11 @@
     <string name="socialMediaTitle">Social Media</string>
     <string name="likeFacebookOption">Like us on Facebook</string>
     <string name="followInstagramOption">Follow us on Instagram</string>
-    <string name="email_login_button">Login with Email</string>
-    <string name="logout_button">Logout</string>
+
+
+    <!--Chat fragment-->
+    <string name="backArrowIcon">Back Arrow Icon</string>
+    <string name="chatFragmentTitle">Ask us anything</string>
+
 
 </resources>
