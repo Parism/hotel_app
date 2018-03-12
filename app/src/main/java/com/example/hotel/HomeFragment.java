@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +24,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+
 import java.util.List;
 
 
 public class HomeFragment extends Fragment {
+
+    private static final String TAG = "homeFragment";
+
 
     private static Intent newFacebookIntent(PackageManager pm, String url) { //creates an intent to the facebook page
         Uri uri = Uri.parse(url);
@@ -69,6 +81,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View homeView = inflater.inflate(R.layout.fragment_home, container, false);
+
+
 
         final DrawerLayout mDrawerLayout = homeView.findViewById(R.id.menu_drawer);
 
@@ -119,6 +133,26 @@ public class HomeFragment extends Fragment {
                         } else if(id == R.id.nav_follow_instagram){ //opens an intent to the insta page
                             newInstagramIntent(activity, "http://instagram.com/_u/antony_suites");
 
+                        }
+
+                        else if(id == R.id.nav_logout_account){
+                            AuthUI.getInstance().signOut(activity.getApplicationContext());
+
+                        }
+
+                        else if(id == R.id.nav_delete_account){
+                            AuthUI.getInstance()
+                                    .delete(activity.getApplicationContext())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(activity.getApplicationContext(),"Account deleted",Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                // Deletion failed
+                                            }
+                                        }
+                                    });
                         }
 
 
@@ -173,6 +207,8 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+
 
 
         return homeView;
