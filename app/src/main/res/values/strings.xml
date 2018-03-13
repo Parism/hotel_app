@@ -45,6 +45,8 @@
     <!--Chat fragment-->
     <string name="backArrowIcon">Back Arrow Icon</string>
     <string name="chatFragmentTitle">Ask us anything</string>
+    <string name="chatPlaceholder">Type a message&#8230;</string>
+    <string name="chatSendButton">Send message button</string>
 
 
 </resources>
