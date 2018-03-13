@@ -46,5 +46,10 @@
     <string name="backArrowIcon">Back Arrow Icon</string>
     <string name="chatFragmentTitle">Ask us anything</string>
 
+    <!-- Rooms fragment -->
+    <string name="rooms_toolbar_title">Rooms</string>
+
+   
+
 
 </resources>

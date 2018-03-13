@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -81,10 +82,7 @@ public class HomeFragment extends Fragment {
 
         View homeView = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-
         final DrawerLayout mDrawerLayout = homeView.findViewById(R.id.menu_drawer);
-
 
         Toolbar toolbar =  homeView.findViewById(R.id.homeToolbar); //toolbar creation
         final AppCompatActivity activity = (AppCompatActivity) getActivity(); //find current activity
@@ -112,6 +110,18 @@ public class HomeFragment extends Fragment {
                 ((HomeActivity)activity).setCurrentItem (1, true); //brings you to the chat fragment
             }
         });
+
+
+        ImageView roomsButton = homeView.findViewById(R.id.roomsButtonImage);
+
+        roomsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity,RoomsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
 
@@ -178,6 +188,7 @@ public class HomeFragment extends Fragment {
             }
             public void onSwipeLeft() {
                 //Toast.makeText(activity, "left", Toast.LENGTH_SHORT).show();
+                mDrawerLayout.closeDrawers();
             }
             public void onSwipeBottom() {
                 //Toast.makeText(activity, "bottom", Toast.LENGTH_SHORT).show();
