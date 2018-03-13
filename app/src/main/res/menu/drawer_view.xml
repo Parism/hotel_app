@@ -4,17 +4,13 @@
     <item android:title="@string/accountTitle">
         <menu>
             <item
-                android:id="@+id/nav_delete_account"
-                android:icon="@drawable/ic_delete_account"
-                android:title="@string/deleteAccountOption" />
-            <item
-                android:id="@+id/nav_link_account"
-                android:icon="@drawable/ic_link_account"
-                android:title="@string/linkAccountOption" />
-            <item
                 android:id="@+id/nav_logout_account"
                 android:icon="@drawable/ic_logout_account"
                 android:title="@string/logoutAccountOption" />
+            <item
+                android:id="@+id/nav_delete_account"
+                android:icon="@drawable/ic_delete_account"
+                android:title="@string/deleteAccountOption" />
         </menu>
     </item>
 
