@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
-                    Toast.makeText(HomeActivity.this, "Successfully logged in",Toast.LENGTH_SHORT).show();
+
 
                 }
                 else{
@@ -52,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
                                             new AuthUI.IdpConfig.EmailBuilder().build(),
                                             new AuthUI.IdpConfig.FacebookBuilder().build(),
                                             new AuthUI.IdpConfig.GoogleBuilder().build()))
+                                    .setTheme(R.style.AppTheme)
                                     .build(),
                             RC_SIGN_IN);
                 }

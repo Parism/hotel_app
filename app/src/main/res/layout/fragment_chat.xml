@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:layout="@layout/fragment_chat">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/chatToolbar"
@@ -14,7 +16,6 @@
         android:background="?attr/colorPrimary"
         app:theme="@style/AppTheme">
 
-
         <ImageView
             android:id="@+id/action_home"
             android:layout_width="wrap_content"
@@ -24,15 +25,73 @@
             app:srcCompat="@drawable/ic_back_arrow"/>
 
         <TextView
-            android:id="@+id/toolbarTitle"
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/chatFragmentTitle"
             android:textColor="@color/white"
             android:textSize="20sp"/>
-
-
     </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messages_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+    </android.support.v7.widget.RecyclerView>
+
+
+
+    <!-- A horizontal line between the chat_box and the RecyclerView -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="#dfdfdf"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/chat_box"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/chat_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="48dp"
+        android:background="#ffffff"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <EditText
+            android:id="@+id/chat_edit_text"
+            android:hint="@string/chatPlaceholder"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:maxLines="6"/>
+
+        <ImageView
+            android:id="@+id/chat_send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:contentDescription="@string/chatSendButton"
+            app:srcCompat="@drawable/ic_send_message"/>
+
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
