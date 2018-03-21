@@ -3,10 +3,11 @@ package com.example.hotel;
 
 public class Message {
 
-    private String name;
+    private String name;//the sender's user Id (uid)
     private String message;
     private String time;
 
+    public Message(){}
 
     public Message(String text, String name, String time) {
         this.message = text;

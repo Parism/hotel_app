@@ -31,6 +31,11 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private static final int RC_SIGN_IN = 1;
 
+    private String uId;//user's id
+
+    public String getUId(){
+        return uId;
+    }
 
     public void setCurrentItem (int item, boolean smoothScroll) { //scrolls from the current fragment to the item fragment
         viewPager.setCurrentItem(item, smoothScroll);
@@ -74,7 +79,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -82,11 +87,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-
+                if(user != null){   //if user is signed in
+                    uId = mFirebaseAuth.getCurrentUser().getUid();//the current user's id
                 }
                 else{
-                    startActivityForResult(
+                    startActivityForResult(//a sign-in intent is created
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
                                     .setIsSmartLockEnabled(false)
@@ -101,6 +106,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         };
+
+        setContentView(R.layout.activity_home);
 
         // Find the view pager that will allow the user to swipe between fragments
         viewPager = findViewById(R.id.viewpager);
@@ -163,7 +170,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        if(mAuthStateListener != null) {
+            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        }
     }
 
 

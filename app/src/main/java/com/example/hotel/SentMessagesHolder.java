@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.TextView;
 
 
-class SentMessagesHolder extends RecyclerView.ViewHolder {
+public class SentMessagesHolder extends RecyclerView.ViewHolder {
 
     private TextView messageText, timeText;
 
-    SentMessagesHolder(View itemView) {
+    public SentMessagesHolder(View itemView) {
         super(itemView);
         messageText = itemView.findViewById(R.id.message_sent);
         timeText = itemView.findViewById(R.id.message_time_sent);

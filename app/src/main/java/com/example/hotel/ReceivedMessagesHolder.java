@@ -10,7 +10,7 @@ public class ReceivedMessagesHolder extends RecyclerView.ViewHolder {
 
     private TextView messageText, timeText, nameText;
 
-    ReceivedMessagesHolder(View itemView) {
+    public ReceivedMessagesHolder(View itemView) {
         super(itemView);
         messageText = itemView.findViewById(R.id.message_received);
         timeText = itemView.findViewById(R.id.message_time_received);
@@ -20,6 +20,6 @@ public class ReceivedMessagesHolder extends RecyclerView.ViewHolder {
     void bind(Message message) {
         messageText.setText(message.getMessage());
         timeText.setText(message.getTime());
-        nameText.setText(message.getName());
+        //nameText.setText(message.getName());
     }
 }
