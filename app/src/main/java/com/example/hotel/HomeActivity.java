@@ -18,8 +18,6 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -83,29 +81,9 @@ public class HomeActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){   //if user is signed in
-                    uId = mFirebaseAuth.getCurrentUser().getUid();//the current user's id
-                }
-                else{
-                    startActivityForResult(//a sign-in intent is created
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                                    .setLogo(R.drawable.ic_hotel_logo)
-                                    .setAvailableProviders(Arrays.asList(
-                                            new AuthUI.IdpConfig.EmailBuilder().build(),
-                                            new AuthUI.IdpConfig.FacebookBuilder().build(),
-                                            new AuthUI.IdpConfig.GoogleBuilder().build()))
-                                    .setTheme(R.style.AppTheme)
-                                    .build(),
-                            RC_SIGN_IN);
-                }
-            }
-        };
+        Intent intent = getIntent();
+        uId = intent.getStringExtra("userId"); //if it's a string you stored.
+
 
         setContentView(R.layout.activity_home);
 
@@ -137,7 +115,16 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                         else if(id == R.id.nav_logout_account){
-                            AuthUI.getInstance().signOut(getApplicationContext());
+
+                            AuthUI.getInstance()
+                                    .signOut(getApplicationContext())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(getApplicationContext(),"Logged out",Toast.LENGTH_SHORT).show();
+                                            HomeActivity.this.startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+                                        }
+                                    });
+
                         }
 
                         else if(id == R.id.nav_delete_account){
@@ -164,24 +151,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(mAuthStateListener != null) {
-            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-        }
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-    }
-
 
 
 }

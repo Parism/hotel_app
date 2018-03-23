@@ -20,6 +20,5 @@ public class ReceivedMessagesHolder extends RecyclerView.ViewHolder {
     void bind(Message message) {
         messageText.setText(message.getMessage());
         timeText.setText(message.getTime());
-        //nameText.setText(message.getName());
     }
 }

@@ -16,9 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -30,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -61,15 +58,13 @@ public class ChatFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        //uId = ((HomeActivity)getActivity()).getUId();
+        uId = ((HomeActivity)getActivity()).getUId();//the current user's id
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
-                    uId = mFirebaseAuth.getCurrentUser().getUid();//the current user's id
-                    Toast.makeText(getActivity(),"Signed in uid: "+uId, Toast.LENGTH_SHORT).show();
                     attachDatabaseReadListener();
                 } else {
                     detachDatabaseListener();
@@ -103,7 +98,6 @@ public class ChatFragment extends Fragment {
 
         messagesRecyclerView = chatView.findViewById(R.id.messages_recycler_view);
 
-        Toast.makeText(getActivity(),"Adapter uid: "+uId, Toast.LENGTH_SHORT).show();
         messagesAdapter = new MessageListAdapter(messageList,uId);
         messagesRecyclerView.setAdapter(messagesAdapter);
 
@@ -144,7 +138,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View view) {    //Send messages on click
 
-                //final String uid = mFirebaseAuth.getCurrentUser().getUid();//the current user's id
+
                 String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                 final Message mMessage = new Message(chatEditText.getText().toString(), uId, currentDateTimeString);//message creation
 

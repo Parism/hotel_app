@@ -82,7 +82,6 @@ public class MessageListAdapter extends RecyclerView.Adapter{
             });
             return new ReceivedMessagesHolder(view);
         }
-        //return null;
     }
 
 
