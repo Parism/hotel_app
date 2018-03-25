@@ -50,9 +50,9 @@ public class ChatFragment extends Fragment {
     private String uId;
     private String roomId;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -73,6 +73,7 @@ public class ChatFragment extends Fragment {
                 }
             }
         };
+
 
         View chatView = inflater.inflate(R.layout.fragment_chat, container, false);
 
@@ -179,11 +180,9 @@ public class ChatFragment extends Fragment {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-
-
-
-
                 chatEditText.setText("");// Clear input box
+
+
             }
         });
 
@@ -270,10 +269,8 @@ public class ChatFragment extends Fragment {
                         mDatabaseReference.addChildEventListener(mChildEventListener);
                     }
                 }
-
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
+                public void onCancelled(DatabaseError databaseError) {}
             });
 
 
@@ -287,6 +284,7 @@ public class ChatFragment extends Fragment {
             mChildEventListener = null;
         }
     }
+
 
 
 }

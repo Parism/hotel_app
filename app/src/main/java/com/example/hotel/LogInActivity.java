@@ -35,6 +35,7 @@ public class LogInActivity extends AppCompatActivity {
                     Intent homeIntent = new Intent(LogInActivity.this, HomeActivity.class);
                     homeIntent.putExtra("userId", uId); //userId passed as parameter
                     LogInActivity.this.startActivity(homeIntent);
+                    finish();
 
                 }
                 else{
@@ -74,6 +75,7 @@ public class LogInActivity extends AppCompatActivity {
                 Intent homeIntent = new Intent(LogInActivity.this, HomeActivity.class);
                 homeIntent.putExtra("userId", uId); //userId passed as parameter
                 LogInActivity.this.startActivity(homeIntent);
+                finish();
 
             } else {
                 // Sign in failed, check response for error code
@@ -100,6 +102,7 @@ public class LogInActivity extends AppCompatActivity {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
+
 
 
 }

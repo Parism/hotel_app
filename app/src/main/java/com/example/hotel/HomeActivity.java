@@ -8,10 +8,12 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
@@ -26,8 +28,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private static final int RC_SIGN_IN = 1;
+    private DrawerLayout mDrawerLayout;
 
     private String uId;//user's id
 
@@ -96,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
 
-        final DrawerLayout mDrawerLayout = this.findViewById(R.id.menu_drawer);
+        mDrawerLayout = this.findViewById(R.id.menu_drawer);
 
         NavigationView navigationView = this.findViewById(R.id.menu);
         navigationView.setNavigationItemSelectedListener(                   //Handle the drawer options
@@ -122,6 +123,7 @@ public class HomeActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Toast.makeText(getApplicationContext(),"Logged out",Toast.LENGTH_SHORT).show();
                                             HomeActivity.this.startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+                                            finish();
                                         }
                                     });
 
@@ -135,6 +137,8 @@ public class HomeActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(getApplicationContext(),"Account deleted",Toast.LENGTH_SHORT).show();
+                                                HomeActivity.this.startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+                                                finish();
                                             } else {
                                                 Toast.makeText(getApplicationContext(),"Deletion failed",Toast.LENGTH_SHORT).show();
                                             }
@@ -148,8 +152,22 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
 
 
+
+
+    @Override
+    public void onBackPressed() {//backbutton handler
+        int index = viewPager.getCurrentItem();
+
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){//if drawer open
+            mDrawerLayout.closeDrawer(Gravity.LEFT); //CLOSE Nav Drawer!
+        } else if(index == 1){//if closed but cgat fragment visible
+            viewPager.setCurrentItem(0, true);//return to home fragment
+        }
+        else
+            super.onBackPressed();//exit app
     }
 
 

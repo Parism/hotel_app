@@ -1,6 +1,8 @@
 package com.example.hotel;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -54,11 +56,21 @@ public class MessageListAdapter extends RecyclerView.Adapter{
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TextView messageDateTime = view.findViewById(R.id.message_time_sent);
+                    final TextView messageDateTime = view.findViewById(R.id.message_time_sent);
                     if(messageDateTime.getVisibility() == View.VISIBLE){//if the message dateTime is visible
-                        messageDateTime.setVisibility(View.GONE);
+                        messageDateTime.animate().setListener(new AnimatorListenerAdapter() { //dateTime fades out over the course of 1 seconds
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                messageDateTime.setVisibility(View.GONE);
+                            }
+                        }).alpha(0.0f).setDuration(500).start();
                     } else {
-                        messageDateTime.setVisibility(View.VISIBLE);
+                        messageDateTime.animate().setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                messageDateTime.setVisibility(View.VISIBLE);
+                            }
+                        }).alpha(1.0f).setDuration(0).start();//dateTime fades in instantly
                     }
                 }
             });
@@ -69,14 +81,24 @@ public class MessageListAdapter extends RecyclerView.Adapter{
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TextView messageDateTime = view.findViewById(R.id.message_time_received);
-                    TextView messageName = view.findViewById(R.id.name_message_received);
+                    final TextView messageDateTime = view.findViewById(R.id.message_time_received);
+                    final TextView messageName = view.findViewById(R.id.name_message_received);
                     if(messageDateTime.getVisibility() == View.VISIBLE){//if the message dateTime is visible
-                        messageDateTime.setVisibility(View.GONE);
-                        messageName.setVisibility(View.GONE);
+                        messageDateTime.animate().setListener(new AnimatorListenerAdapter() { //dateTime fades out over the course of 1 seconds
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                messageDateTime.setVisibility(View.GONE);
+                                messageName.setVisibility(View.GONE);
+                            }
+                        }).alpha(0.0f).setDuration(500).start();
                     } else {
-                        messageDateTime.setVisibility(View.VISIBLE);
-                        messageName.setVisibility(View.VISIBLE);
+                        messageDateTime.animate().setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                messageDateTime.setVisibility(View.VISIBLE);
+                                messageName.setVisibility(View.VISIBLE);
+                            }
+                        }).alpha(1.0f).setDuration(0).start();//dateTime fades in instantly
                     }
                 }
             });
