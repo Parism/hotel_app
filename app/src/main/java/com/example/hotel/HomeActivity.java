@@ -1,5 +1,6 @@
 package com.example.hotel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -15,19 +16,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 
 public class HomeActivity extends AppCompatActivity {
 
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     private ViewPager viewPager;
-    private FirebaseAuth mFirebaseAuth;
     private DrawerLayout mDrawerLayout;
 
     private String uId;//user's id
@@ -74,13 +83,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    public static void hideKeyboard(Activity activity) {    //hide android keyboard
+        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View currentFocusedView = activity.getCurrentFocus();
+        if (currentFocusedView != null) {
+            inputManager.hideSoftInputFromWindow(currentFocusedView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         Intent intent = getIntent();
         uId = intent.getStringExtra("userId"); //if it's a string you stored.
@@ -97,7 +115,31 @@ public class HomeActivity extends AppCompatActivity {
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {//hide android keyboard when fragment changes
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                hideKeyboard(HomeActivity.this);
+            }
+            public void onPageSelected(int position) {}
+        });
+
+
+
         mDrawerLayout = this.findViewById(R.id.menu_drawer);
+
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {//hide android keyboard when drawer opens
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {}
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                hideKeyboard(HomeActivity.this);
+            }
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {}
+            @Override
+            public void onDrawerStateChanged(int newState) {}
+        });
+
 
         NavigationView navigationView = this.findViewById(R.id.menu);
         navigationView.setNavigationItemSelectedListener(                   //Handle the drawer options
@@ -116,7 +158,6 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                         else if(id == R.id.nav_logout_account){
-
                             AuthUI.getInstance()
                                     .signOut(getApplicationContext())
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -126,10 +167,27 @@ public class HomeActivity extends AppCompatActivity {
                                             finish();
                                         }
                                     });
-
                         }
 
                         else if(id == R.id.nav_delete_account){
+
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uId);
+                            mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    UserInfo userΙnfo = dataSnapshot.getValue(UserInfo.class);
+                                    String roomKey = userΙnfo.chatRoomKey;
+
+                                    mFirebaseDatabase.getReference().child("users").child(uId).removeValue();//remove user from users
+
+                                    mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomKey);
+                                    mDatabaseReference.removeValue();//remove user's chatRoom from chatRooms
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
                             AuthUI.getInstance()
                                     .delete(getApplicationContext())
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -146,9 +204,7 @@ public class HomeActivity extends AppCompatActivity {
                                     });
                         }
 
-
                         mDrawerLayout.closeDrawers();   // close drawer when item is tapped
-
                         return true;
                     }
                 });
@@ -158,12 +214,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
     @Override
-    public void onBackPressed() {//backbutton handler
+    public void onBackPressed() {//back button handler
         int index = viewPager.getCurrentItem();
 
         if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){//if drawer open
-            mDrawerLayout.closeDrawer(Gravity.LEFT); //CLOSE Nav Drawer!
-        } else if(index == 1){//if closed but cgat fragment visible
+            mDrawerLayout.closeDrawer(Gravity.START); //CLOSE Nav Drawer!
+        } else if(index == 1){//if drawer closed but chat fragment visible
             viewPager.setCurrentItem(0, true);//return to home fragment
         }
         else

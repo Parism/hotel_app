@@ -3,7 +3,7 @@ package com.example.hotel;
 
 public class Message {
 
-    private String name;//the sender's user Id (uid)
+    private String uId;//the sender's user Id (uid)
     private String message;
     private String time;
 
@@ -11,10 +11,18 @@ public class Message {
 
     public Message(String text, String name, String time) {
         this.message = text;
-        this.name = name;
+        this.uId = name;
         this.time = time;
     }
 
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
 
     public String getTime() {
         return time;
@@ -22,14 +30,6 @@ public class Message {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getMessage() {

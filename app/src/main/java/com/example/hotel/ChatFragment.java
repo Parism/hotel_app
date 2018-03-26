@@ -1,5 +1,6 @@
 package com.example.hotel;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -104,7 +106,7 @@ public class ChatFragment extends Fragment {
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(activity);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        messagesRecyclerView.setLayoutManager(mLayoutManager);//
+        messagesRecyclerView.setLayoutManager(mLayoutManager);
         messagesRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
@@ -148,32 +150,16 @@ public class ChatFragment extends Fragment {
                 mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {    // User Exists
+                        UserInfo userΙnfo = dataSnapshot.getValue(UserInfo.class);
+                        String roomKey = userΙnfo.chatRoomKey;
 
-                            UserInfo userΙnfo = dataSnapshot.getValue(UserInfo.class);
-                            String roomKey = userΙnfo.chatRoomKey;
+                        mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms");
+                        String messageId = mDatabaseReference.child(roomKey).push().getKey();
+                        mDatabaseReference.child(roomKey).child(messageId).setValue(mMessage);//insert message in chatRooms
 
-                            mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms");
-                            String messageId = mDatabaseReference.child(roomKey).push().getKey();
-                            mDatabaseReference.child(roomKey).child(messageId).setValue(mMessage);//insert message in chatRooms
-
-                            mDatabaseReference = mFirebaseDatabase.getReference().child("users");//update messageId in users
-                            UserInfo userInfo = new UserInfo(roomKey,messageId);
-                            mDatabaseReference.child(uId).setValue(userInfo);
-
-
-                        } else{    //user doesn't exist
-                            mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms");//a reference to the chatRooms' node
-                            String roomKey = mDatabaseReference.push().getKey();//create and retrieve the chatRoom's id
-
-                            String messageId = mDatabaseReference.child(roomKey).push().getKey();//create and retrieve the message's id
-                            mDatabaseReference.child(roomKey).child(messageId).setValue(mMessage);//write the message to chatRooms database
-
-
-                            mDatabaseReference = mFirebaseDatabase.getReference().child("users");//reference to the users' node
-                            UserInfo userInfo = new UserInfo(roomKey,messageId);
-                            mDatabaseReference.child(uId).setValue(userInfo);
-                        }
+                        mDatabaseReference = mFirebaseDatabase.getReference().child("users");//update messageId in users
+                        UserInfo userInfo = new UserInfo(roomKey,messageId);
+                        mDatabaseReference.child(uId).setValue(userInfo);
                     }
 
                     @Override
