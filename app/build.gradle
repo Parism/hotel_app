@@ -17,17 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 }
 
-/*configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            details.useVersion '27.0.2'
-        }
-    }
-}*/
 
 
 dependencies {
@@ -57,10 +49,10 @@ dependencies {
     // compile("com.twitter.sdk.android:twitter-core:3.0.0@aar") { transitive = true }
 
     //firebase dependencies
-    implementation 'com.google.firebase:firebase-core:11.8.0'
-    implementation 'com.google.firebase:firebase-database:11.8.0'
-    implementation 'com.google.firebase:firebase-auth:11.8.0'
-    implementation 'com.google.android.gms:play-services-auth:11.8.0'
+    implementation 'com.google.firebase:firebase-core:12.0.0'
+    implementation 'com.google.firebase:firebase-database:12.0.0'
+    implementation 'com.google.firebase:firebase-auth:12.0.0'
+    implementation 'com.google.android.gms:play-services-auth:12.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
 
 }

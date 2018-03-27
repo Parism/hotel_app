@@ -10,6 +10,7 @@ public class ReceivedMessagesHolder extends RecyclerView.ViewHolder {
 
     private TextView messageText, timeText, nameText;
 
+    @SuppressWarnings("WeakerAccess")
     public ReceivedMessagesHolder(View itemView) {
         super(itemView);
         messageText = itemView.findViewById(R.id.message_received);

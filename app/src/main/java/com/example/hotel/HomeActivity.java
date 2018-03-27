@@ -175,13 +175,14 @@ public class HomeActivity extends AppCompatActivity {
                             mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    UserInfo userΙnfo = dataSnapshot.getValue(UserInfo.class);
-                                    String roomKey = userΙnfo.chatRoomKey;
+                                    UserInfo userInfo = dataSnapshot.getValue(UserInfo.class);
+                                    if(userInfo != null) {
+                                        String roomKey = userInfo.chatRoomKey;
+                                        mFirebaseDatabase.getReference().child("users").child(uId).removeValue();//remove user from users
 
-                                    mFirebaseDatabase.getReference().child("users").child(uId).removeValue();//remove user from users
-
-                                    mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomKey);
-                                    mDatabaseReference.removeValue();//remove user's chatRoom from chatRooms
+                                        mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomKey);
+                                        mDatabaseReference.removeValue();//remove user's chatRoom from chatRooms
+                                    }
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {

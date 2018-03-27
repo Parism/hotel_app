@@ -9,6 +9,7 @@ public class Message {
 
     public Message(){}
 
+    @SuppressWarnings("WeakerAccess")
     public Message(String text, String name, String time) {
         this.message = text;
         this.uId = name;

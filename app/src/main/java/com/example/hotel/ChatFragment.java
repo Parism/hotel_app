@@ -1,6 +1,5 @@
 package com.example.hotel;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -150,16 +148,18 @@ public class ChatFragment extends Fragment {
                 mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        UserInfo userΙnfo = dataSnapshot.getValue(UserInfo.class);
-                        String roomKey = userΙnfo.chatRoomKey;
+                        UserInfo userInfo= dataSnapshot.getValue(UserInfo.class);
 
-                        mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms");
-                        String messageId = mDatabaseReference.child(roomKey).push().getKey();
-                        mDatabaseReference.child(roomKey).child(messageId).setValue(mMessage);//insert message in chatRooms
+                        if(userInfo != null) {
+                            String roomKey = userInfo.chatRoomKey;
 
-                        mDatabaseReference = mFirebaseDatabase.getReference().child("users");//update messageId in users
-                        UserInfo userInfo = new UserInfo(roomKey,messageId);
-                        mDatabaseReference.child(uId).setValue(userInfo);
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms");
+                            String messageId = mDatabaseReference.child(roomKey).push().getKey();
+                            mDatabaseReference.child(roomKey).child(messageId).setValue(mMessage);//insert message in chatRooms
+
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("users");//update messageId in users
+                            mDatabaseReference.child(uId).child("lastMessageId").setValue(messageId);
+                        }
                     }
 
                     @Override
@@ -171,8 +171,6 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
-
 
         return chatView;
     }
@@ -227,9 +225,6 @@ public class ChatFragment extends Fragment {
                 }
             };
 
-            mFirebaseDatabase = FirebaseDatabase.getInstance();
-            uId = ((HomeActivity)getActivity()).getUId();
-
 
             mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uId);
             mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
@@ -237,8 +232,8 @@ public class ChatFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {    // User Exists
 
-                        UserInfo userΙnfo = dataSnapshot.getValue(UserInfo.class);
-                        roomId = userΙnfo.chatRoomKey;//find the user's room Id
+                        UserInfo userInfo = dataSnapshot.getValue(UserInfo.class);
+                        roomId = userInfo.chatRoomKey;//find the user's room Id
 
                         mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomId);
                         mDatabaseReference.addChildEventListener(mChildEventListener);
@@ -248,8 +243,10 @@ public class ChatFragment extends Fragment {
                         roomId = mDatabaseReference.push().getKey();//create and retrieve the chatRoom's id
 
                         mDatabaseReference = mFirebaseDatabase.getReference().child("users");//reference to the users' node
-                        UserInfo userInfo = new UserInfo(roomId,null);
-                        mDatabaseReference.child(uId).setValue(userInfo);//save the room's id in users node
+
+                        String userName = mFirebaseAuth.getCurrentUser().getDisplayName();
+                        UserInfo userInfo = new UserInfo(roomId,null,userName);
+                        mDatabaseReference.child(uId).setValue(userInfo);//save the room's id & the user's name in users node
 
                         mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomId);
                         mDatabaseReference.addChildEventListener(mChildEventListener);

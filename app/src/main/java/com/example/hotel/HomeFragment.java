@@ -85,36 +85,8 @@ public class HomeFragment extends Fragment {
 
         });
 
-
-//        ViewPager viewPager = activity.findViewById(R.id.viewpager);
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() { //Handles fragment page change
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {  //if chat fragment is selected,the navigation drawer is closed
-//                if(position == 1) {
-//                    mDrawerLayout.closeDrawers();
-//                }
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-
-
-
-
         return homeView;
     }
-
-
-
-
 
 
 }
