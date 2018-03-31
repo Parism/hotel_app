@@ -27,6 +27,8 @@ public class RoomsFragmentAdapter extends FragmentPagerAdapter {
                 return new JuniorSuitesFragment();
             case 1:
                 return new MasterSuitesFragment();
+            case 2:
+                return new ApartmentsFragment();
 
             default:
                 return null;

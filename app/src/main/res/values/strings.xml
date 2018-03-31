@@ -51,7 +51,43 @@
     <!-- Rooms fragment -->
     <string name="rooms_toolbar_title">Rooms</string>
 
-   
+    <!-- Junior Suites Fragment -->
+    <string name="junior_suites_title">The Junior Suites</string>
+    <string name="junior_suites_desc">
+        <![CDATA[
+        <h3>Minimalistic Cycladic Architecture</h3>
+        <p>Be the first to experience our newly renovated hotel rooms and enjoy a truly relaxing stay in a Junior Suite.
+        The spacious one bedroom Junior Suites are ideal for both couples and families with a private veranda or balcony with side sea view.
+        Decorated in the traditional Cycladic style the junior suite features a small fully equipped kitchenette,
+        one king size bed plus one or two single sofa beds and hi-tech lighting system.
+        Individually control air-conditioning is standard as well as satellite flat TV and free Wi-Fi.</p>]]></string>
+
+    <string name="photoImageDesc">Photo Icon</string>
+    <string name="showMorePhotosText">More photos</string>
+
+    <!-- Junior Suites Photos Activity -->
+    <string name="juniorSuitesPhotosTitle">Junior Suites</string>
+
+    <!-- Apartments fragment-->
+    <string name="apartmentsTitle">Very spacious accommodation</string>
+
+    <string name="apartmentsDesc">
+        <![CDATA[
+            <h3>With two rooms</h3>
+            <p>Fitted with marble floors, the Family Apartments come with a separate bedroom.
+            Opening to a balcony, they offer a living room with 2 sofa beds and flat-screen, satellite TV,
+            as well as a fully equipped kitchen with cooking hobs, dishwasher and washing machine.
+            Free Wi-Fi Internet is provided.</p>
+        ]]>
+    </string>
+
+    <!-- Check In Activity -->
+
+    <string name="checkInTitle">Check In</string>
+    <string name="firstNameHint">First name</string>
+    <string name="lastNameHint">Last Name</string>
+    <string name="checkInDateHint">Check In</string>
+    <string name="checkOutDateHint">Check Out</string>
 
 
 </resources>

@@ -39,7 +39,11 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".RoomsActivity"></activity>
+        <activity android:name=".RoomsActivity" />
+        <activity android:name=".JuniorSuitesPhotosActivity" />
+        <activity android:name=".OpenPhotoActivity" />
+        <activity android:name=".JuniorPhotosActivity" />
+        <activity android:name=".CheckInActivity"></activity>
     </application>
 
 </manifest>

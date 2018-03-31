@@ -65,6 +65,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        ImageView checkInButton = homeView.findViewById(R.id.checkInButtonImage);
+
+        checkInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, CheckInActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
