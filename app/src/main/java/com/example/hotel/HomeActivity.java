@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         Intent intent = getIntent();
-        uId = intent.getStringExtra("userId"); //if it's a string you stored.
+        uId = intent.getStringExtra("userId");
 
 
         setContentView(R.layout.activity_home);
