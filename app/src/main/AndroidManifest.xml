@@ -44,11 +44,10 @@
 
         <activity android:name=".RoomsActivity" />
         <activity android:name=".HomeActivity"/>
-        <activity android:name=".RoomsActivity" />
         <activity android:name=".JuniorSuitesPhotosActivity" />
         <activity android:name=".OpenPhotoActivity" />
         <activity android:name=".JuniorPhotosActivity" />
-        <activity android:name=".CheckInActivity"></activity>
+        <activity android:name=".CheckInActivity"/>
     </application>
 
 </manifest>
