@@ -6,6 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 
 public class RoomsActivity extends AppCompatActivity {
 
@@ -20,12 +22,20 @@ public class RoomsActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.rooms_tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Junior Suites"));
         tabLayout.addTab(tabLayout.newTab().setText("Master Suites"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Apartments"));
+        tabLayout.addTab(tabLayout.newTab().setText("Apartments"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         if(this.getSupportActionBar() != null){
             this.getSupportActionBar().setDisplayShowTitleEnabled(false); //hide app title from toolbar
         }
+
+        ImageView arrow_icon = RoomsActivity.this.findViewById(R.id.rooms_back_button);
+        arrow_icon.setOnClickListener(new View.OnClickListener() {  //arrow icon listener
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final RoomsFragmentAdapter adapter = new RoomsFragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());

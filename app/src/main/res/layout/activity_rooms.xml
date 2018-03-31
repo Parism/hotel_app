@@ -51,6 +51,7 @@
         android:theme="@style/AppTheme"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/grey"
+        app:tabTextAppearance="@style/MyTabStyle"
         app:tabIndicatorColor="@color/white" />
 
     <android.support.v4.view.ViewPager
