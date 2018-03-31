@@ -10,10 +10,13 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/chatToolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:layout_height="56dp"
         android:background="?attr/colorPrimary"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:theme="@style/AppTheme">
 
         <ImageView
@@ -22,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:contentDescription="@string/backArrowIcon"
-            app:srcCompat="@drawable/ic_back_arrow"/>
+            app:srcCompat="@drawable/ic_back_arrow" />
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -31,23 +34,27 @@
             android:layout_gravity="center"
             android:text="@string/chatFragmentTitle"
             android:textColor="@color/white"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messages_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/chat_horizontal_line"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chatToolbar">
     </android.support.v7.widget.RecyclerView>
 
 
 
     <!-- A horizontal line between the chat_box and the RecyclerView -->
     <View
+        android:id="@+id/chat_horizontal_line"
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:background="#dfdfdf"
@@ -88,6 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:enabled="false"
             android:contentDescription="@string/chatSendButton"
             app:srcCompat="@drawable/ic_send_message"/>
 

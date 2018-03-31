@@ -47,6 +47,7 @@
     <string name="chatFragmentTitle">Ask us anything</string>
     <string name="chatPlaceholder">Type a message&#8230;</string>
     <string name="chatSendButton">Send message button</string>
+    <string name="chatHotelImage">Hotel Logo</string>
 
     <!-- Rooms fragment -->
     <string name="rooms_toolbar_title">Rooms</string>

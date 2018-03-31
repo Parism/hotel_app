@@ -1,5 +1,6 @@
 package com.example.hotel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -8,29 +9,41 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import java.util.Arrays;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 
 public class HomeActivity extends AppCompatActivity {
 
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     private ViewPager viewPager;
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private static final int RC_SIGN_IN = 1;
+    private DrawerLayout mDrawerLayout;
 
+    private String uId;//user's id
+
+    public String getUId(){
+        return uId;
+    }
 
     public void setCurrentItem (int item, boolean smoothScroll) { //scrolls from the current fragment to the item fragment
         viewPager.setCurrentItem(item, smoothScroll);
@@ -70,37 +83,28 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    public static void hideKeyboard(Activity activity) {    //hide android keyboard
+        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View currentFocusedView = activity.getCurrentFocus();
+        if (currentFocusedView != null) {
+            inputManager.hideSoftInputFromWindow(currentFocusedView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        Intent intent = getIntent();
+        uId = intent.getStringExtra("userId"); //if it's a string you stored.
+
+
         setContentView(R.layout.activity_home);
-
-        mFirebaseAuth = FirebaseAuth.getInstance();
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-
-                }
-                else{
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                                    .setLogo(R.drawable.ic_hotel_logo)
-                                    .setAvailableProviders(Arrays.asList(
-                                            new AuthUI.IdpConfig.EmailBuilder().build(),
-                                            new AuthUI.IdpConfig.FacebookBuilder().build(),
-                                            new AuthUI.IdpConfig.GoogleBuilder().build()))
-                                    .setTheme(R.style.AppTheme)
-                                    .build(),
-                            RC_SIGN_IN);
-                }
-            }
-        };
 
         // Find the view pager that will allow the user to swipe between fragments
         viewPager = findViewById(R.id.viewpager);
@@ -111,7 +115,31 @@ public class HomeActivity extends AppCompatActivity {
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
 
-        final DrawerLayout mDrawerLayout = this.findViewById(R.id.menu_drawer);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {//hide android keyboard when fragment changes
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                hideKeyboard(HomeActivity.this);
+            }
+            public void onPageSelected(int position) {}
+        });
+
+
+
+        mDrawerLayout = this.findViewById(R.id.menu_drawer);
+
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {//hide android keyboard when drawer opens
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {}
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                hideKeyboard(HomeActivity.this);
+            }
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {}
+            @Override
+            public void onDrawerStateChanged(int newState) {}
+        });
+
 
         NavigationView navigationView = this.findViewById(R.id.menu);
         navigationView.setNavigationItemSelectedListener(                   //Handle the drawer options
@@ -130,10 +158,36 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                         else if(id == R.id.nav_logout_account){
-                            AuthUI.getInstance().signOut(getApplicationContext());
+                            AuthUI.getInstance()
+                                    .signOut(getApplicationContext())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(getApplicationContext(),"Logged out",Toast.LENGTH_SHORT).show();
+                                            HomeActivity.this.startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+                                            finish();
+                                        }
+                                    });
                         }
 
                         else if(id == R.id.nav_delete_account){
+
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uId);
+                            mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    UserInfo userΙnfo = dataSnapshot.getValue(UserInfo.class);
+                                    String roomKey = userΙnfo.chatRoomKey;
+
+                                    mFirebaseDatabase.getReference().child("users").child(uId).removeValue();//remove user from users
+
+                                    mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomKey);
+                                    mDatabaseReference.removeValue();//remove user's chatRoom from chatRooms
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
                             AuthUI.getInstance()
                                     .delete(getApplicationContext())
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -141,6 +195,8 @@ public class HomeActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(getApplicationContext(),"Account deleted",Toast.LENGTH_SHORT).show();
+                                                HomeActivity.this.startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+                                                finish();
                                             } else {
                                                 Toast.makeText(getApplicationContext(),"Deletion failed",Toast.LENGTH_SHORT).show();
                                             }
@@ -148,31 +204,27 @@ public class HomeActivity extends AppCompatActivity {
                                     });
                         }
 
-
                         mDrawerLayout.closeDrawers();   // close drawer when item is tapped
-
                         return true;
                     }
                 });
-
-
     }
+
 
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    public void onBackPressed() {//back button handler
+        int index = viewPager.getCurrentItem();
+
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){//if drawer open
+            mDrawerLayout.closeDrawer(Gravity.START); //CLOSE Nav Drawer!
+        } else if(index == 1){//if drawer closed but chat fragment visible
+            viewPager.setCurrentItem(0, true);//return to home fragment
+        }
+        else
+            super.onBackPressed();//exit app
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-    }
-
 
 
 }
