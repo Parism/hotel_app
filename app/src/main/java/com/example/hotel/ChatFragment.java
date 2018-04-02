@@ -198,34 +198,10 @@ public class ChatFragment extends Fragment {
 
     private void attachDatabaseReadListener(){
         if(mChildEventListener == null) {
-            mChildEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Message mMessage = dataSnapshot.getValue(Message.class);
-                    messageList.add(mMessage);
-                    messagesRecyclerView.scrollToPosition(messageList.size()-1);
-                    messagesAdapter.notifyItemInserted(messageList.size() - 1);
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            };
 
 
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+            uId = ((HomeActivity)getActivity()).getUId();//the current user's id
             mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uId);
             mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
                 @Override
@@ -233,10 +209,41 @@ public class ChatFragment extends Fragment {
                     if (dataSnapshot.exists()) {    // User Exists
 
                         UserInfo userInfo = dataSnapshot.getValue(UserInfo.class);
-                        roomId = userInfo.chatRoomKey;//find the user's room Id
 
-                        mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomId);
-                        mDatabaseReference.addChildEventListener(mChildEventListener);
+                        if(userInfo != null) {
+                            roomId = userInfo.chatRoomKey;//find the user's room Id
+
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomId);
+
+
+                            mChildEventListener = new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                    Message mMessage = dataSnapshot.getValue(Message.class);
+                                    messageList.add(mMessage);
+                                    messagesRecyclerView.scrollToPosition(messageList.size()-1);
+                                    messagesAdapter.notifyItemInserted(messageList.size() - 1);
+                                }
+
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                }
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                }
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            };
+                            mDatabaseReference.addChildEventListener(mChildEventListener);
+                        }
 
                     } else{    //user doesn't exist
                         mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms");//a reference to the chatRooms' node

@@ -51,7 +51,7 @@
                     android:id="@+id/photoCameraApartmentsImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/photo_camera"
+                    android:src="@drawable/ic_camera"
 
                     android:contentDescription="@string/photoImageDesc"/>
                 <TextView
