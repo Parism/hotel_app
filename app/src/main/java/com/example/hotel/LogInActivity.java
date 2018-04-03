@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,7 +78,7 @@ public class LogInActivity extends AppCompatActivity {
 
             } else {
                 // Sign in failed, check response for error code
-                Toast.makeText(this,"SIGN IN FAILED",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"SIGN IN FAILED",Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
