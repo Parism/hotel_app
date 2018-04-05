@@ -224,22 +224,17 @@ public class ChatFragment extends Fragment {
                                     messagesRecyclerView.scrollToPosition(messageList.size()-1);
                                     messagesAdapter.notifyItemInserted(messageList.size() - 1);
                                 }
-
                                 @Override
                                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
                                 }
                                 @Override
                                 public void onChildRemoved(DataSnapshot dataSnapshot) {
-
                                 }
                                 @Override
                                 public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-
                                 }
                             };
                             mDatabaseReference.addChildEventListener(mChildEventListener);
@@ -256,6 +251,28 @@ public class ChatFragment extends Fragment {
                         mDatabaseReference.child(uId).setValue(userInfo);//save the room's id & the user's name in users node
 
                         mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomId);
+
+                        mChildEventListener = new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Message mMessage = dataSnapshot.getValue(Message.class);
+                                messageList.add(mMessage);
+                                messagesRecyclerView.scrollToPosition(messageList.size()-1);
+                                messagesAdapter.notifyItemInserted(messageList.size() - 1);
+                            }
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            }
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                            }
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        };
                         mDatabaseReference.addChildEventListener(mChildEventListener);
                     }
                 }

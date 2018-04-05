@@ -178,10 +178,14 @@ public class HomeActivity extends AppCompatActivity {
                                     UserInfo userInfo = dataSnapshot.getValue(UserInfo.class);
                                     if(userInfo != null) {
                                         String roomKey = userInfo.chatRoomKey;
-                                        mFirebaseDatabase.getReference().child("users").child(uId).removeValue();//remove user from users
 
                                         mDatabaseReference = mFirebaseDatabase.getReference().child("chatRooms").child(roomKey);
                                         mDatabaseReference.removeValue();//remove user's chatRoom from chatRooms
+
+                                        mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uId);
+                                        mDatabaseReference.removeValue();//remove user from users
+
+
                                     }
                                 }
                                 @Override
