@@ -60,20 +60,6 @@ public class ChatFragment extends Fragment {
 
         uId = ((HomeActivity)getActivity()).getUId();//the current user's id
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    attachDatabaseReadListener();
-                } else {
-                    detachDatabaseListener();
-                    messageList.clear(); //clear list
-                    messagesAdapter.notifyDataSetChanged(); //let your adapter know about the changes and reload view.
-                }
-            }
-        };
-
 
         View chatView = inflater.inflate(R.layout.fragment_chat, container, false);
 
@@ -108,6 +94,19 @@ public class ChatFragment extends Fragment {
         messagesRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    attachDatabaseReadListener();
+                } else {
+                    detachDatabaseListener();
+                    messageList.clear(); //clear list
+                    messagesAdapter.notifyDataSetChanged(); //let your adapter know about the changes and reload view.
+                }
+            }
+        };
 
 
         final EditText chatEditText = chatView.findViewById(R.id.chat_edit_text);
